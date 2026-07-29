@@ -9,22 +9,17 @@ def train_logistic_regression(X, y, lr=0.1, steps=1000):
     Train logistic regression via gradient descent.
     Return (w, b).
     """
-    m, n = X.shape
-    w = np.zeros(n)
-    b=0
-
+    w = np.zeros(X.shape[1])
+    b = 0.0
+    
     for _ in range(steps):
-        z = np.dot(X, w) + b
-        y_hat = _sigmoid(z)
-
-        dw = (1/m) * np.dot(X.T, (y_hat-y))
-        db = (1/m) * np.sum(y_hat-y)
-
-        w -= lr * dw
-        b -= lr * db        
-
-    return w, b
-
-# Prediction
-def predict(X, w, b):
-    return _sigmoid(np.dot(X, w) + b) >= 0.5
+        linear = X @ w + b
+        prediction = _sigmoid(linear)
+        error = prediction - y
+        dw = X.T @ error / X.shape[0]
+        db = np.mean(error)
+        w = w - lr * dw
+        b = b - lr * db
+        
+    # Write code here
+    return (w,b)
