@@ -6,8 +6,10 @@ def binomial_pmf_cdf(n, p, k):
     Compute Binomial PMF and CDF.
     """
     # Write code here
+    i = np.arange(k+1)
     pmf = comb(n, k) * (p**k) * ((1-p)**(n-k))
-    cdf = sum(comb(n, i) * (p**i) * ((1-p)**(n-i)) for i in range(k+1))
+    terms = comb(n, i) * (p**i) * ((1-p)**(n-i)) 
+    cdf = np.sum(terms)
 
     return pmf, cdf
 
