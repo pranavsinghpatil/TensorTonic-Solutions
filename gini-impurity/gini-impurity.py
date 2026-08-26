@@ -16,24 +16,18 @@ def gini_impurity(y_left: list, y_right: list) -> float:
         return 0.0
 
     def gini(y):
-        # Empty child
         if len(y) == 0:
             return 0.0
 
-        # Count each class
         _, counts = np.unique(y, return_counts=True)
 
-        # Class probabilities
         probabilities = counts / len(y)
 
-        # Gini impurity
         return 1.0 - np.sum(probabilities ** 2)
 
-    # Compute impurity of each child
     gini_left = gini(y_left)
     gini_right = gini(y_right)
 
-    # Weighted impurity
     weighted_gini = (
         (N_left / N) * gini_left
         + (N_right / N) * gini_right
