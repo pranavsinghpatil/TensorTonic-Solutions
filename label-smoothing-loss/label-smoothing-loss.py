@@ -16,5 +16,5 @@ def label_smoothing_loss(predictions: list, target: int, epsilon: float) -> floa
         else:
             cl.append(epsilon/K )
             sm += cl[i] * math.log(predictions[i])
-    # for i in 
+    
     return -sm
