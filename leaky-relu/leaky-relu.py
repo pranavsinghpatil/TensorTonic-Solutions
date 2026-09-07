@@ -1,10 +1,10 @@
 import numpy as np
 
-def leaky_relu(x, alpha=0.01):
+def leaky_relu(x: list | float, alpha: float = 0.01) -> np.ndarray:
     """
-    Vectorized Leaky ReLU implementation.
+    Returns elementwise Leaky ReLU values as a NumPy array matching the input shape.
     """
     # Write code here
-    xn = np.asarray(x)
-    return np.where(xn<0, xn * alpha, xn)
+    x = np.array(x, dtype=np.float64)
     
+    return np.where(x >= 0, x, alpha * x)
