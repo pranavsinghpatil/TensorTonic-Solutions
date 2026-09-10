@@ -11,7 +11,6 @@ def impute_missing(X: list, strategy: str = "mean") -> np.ndarray:
         mask = np.isnan(X)
 
         observed = ~mask
-        fill_value = 0.0
 
         if X[observed].size == 0:
             fill_value = 0.0
