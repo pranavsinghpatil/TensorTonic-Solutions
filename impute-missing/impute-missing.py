@@ -1,48 +1,45 @@
 import numpy as np
 
-def impute_missing(X, strategy='mean'):
+def impute_missing(X: list, strategy: str = "mean") -> np.ndarray:
     """
-    Fill NaN values in each feature column using column mean or median.
+    Returns a NumPy array with the same shape as X.
     """
+    # Write code here
     X = np.asarray(X, dtype=float).copy()
 
-    if strategy not in ('mean', 'median'):
-        return None
-
-    mask = np.isnan(X)
-    mask_valid = np.logical_not(mask)
-
     if X.ndim == 1:
-        valid_values = X[mask_valid]
+        mask = np.isnan(X)
 
-        if valid_values.size == 0:
-            fill_value = 0
+        observed = ~mask
+        fill_value = 0.0
 
-        elif strategy == 'mean':
-            fill_value = np.mean(valid_values)
-
-        elif strategy == 'median':
-            fill_value = np.median(valid_values)
+        if X[observed].size == 0:
+            fill_value = 0.0
+        elif strategy == "mean":
+            fill_value = np.mean(X[observed])
+        else:
+            fill_value = np.median(X[observed])
 
         X[mask] = fill_value
 
-    elif X.ndim == 2:
+        return X
 
-        for j in range(X.shape[1]):
-            valid_values = X[:, j][mask_valid[:, j]]
+    # 2D case
+    rows, cols = X.shape
 
-            if valid_values.size == 0:
-                fill_value = 0
+    for j in range(cols):
 
-            elif strategy == 'mean':
-                fill_value = np.mean(valid_values)
+        mask = np.isnan(X[:, j])
 
-            elif strategy == 'median':
-                fill_value = np.median(valid_values)
+        observed = ~mask
 
-            X[mask[:, j], j] = fill_value
+        if X[observed, j].size == 0:
+            fill_value = 0.0
+        elif strategy == "mean":
+            fill_value = np.mean(X[observed, j])
+        else:
+            fill_value = np.median(X[observed, j])
 
-    else:
-        return None
+        X[mask, j] = fill_value
 
     return X
